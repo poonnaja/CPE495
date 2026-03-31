@@ -8,6 +8,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Optional
 import os, asyncpg
+import uvicorn
 from datetime import datetime
 
 # ──────────────────────────────────────────────
@@ -315,3 +316,13 @@ async def list_activity_log(
         f"SELECT * FROM activity_log {where} ORDER BY id DESC LIMIT ${len(params)}",
         *params)
     return [dict(r) for r in rows]
+
+# ══════════════════════════════════════════════
+#  RENDER
+# ══════════════════════════════════════════════
+
+if __name__ == "__main__":
+    # ดึงค่า PORT จาก Environment Variable ที่ Render กำหนดให้
+    port = int(os.environ.get("PORT", 10000))
+    # รัน uvicorn โดยระบุ host เป็น 0.0.0.0
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
