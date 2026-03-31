@@ -7,8 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Optional
-import os, asyncpg
-import uvicorn
+import os, asyncpg ,uvicorn
 from datetime import datetime
 
 # ──────────────────────────────────────────────
