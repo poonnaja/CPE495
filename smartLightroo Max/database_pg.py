@@ -10,7 +10,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 def _conn():
-    return psycopg2.connect(DATABASE_URL)
+    return psycopg2.connect(DATABASE_URL ,sslmode='require')
 
 # ── helper ────────────────────────────────────────────────────
 def _fetch(sql, params=()):
