@@ -27,7 +27,7 @@ app.add_middleware(
 # ──────────────────────────────────────────────
 # Config — ดึงจาก env variable
 # ──────────────────────────────────────────────
-DATABASE_URL = os.getenv("postgresql://postgres.oegujnyenqclgnagrebs:CPE_66083101@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres")   # postgres://user:pass@host:5432/db
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.oegujnyenqclgnagrebs:CPE_66083101@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres")   # postgres://user:pass@host:5432/db
 API_KEY      = os.getenv("API_KEY", "cpe495-secret-key")
 
 bearer = HTTPBearer(auto_error=False)
@@ -45,7 +45,7 @@ pool: asyncpg.Pool = None
 @app.on_event("startup")
 async def startup():
     global pool
-    pool = await asyncpg.create_pool(DATABASE_URL, min_size=1, max_size=5)
+    pool = await asyncpg.create_pool(DATABASE_URL, min_size=1, max_size=5, statement_cache_size=0)
 
 @app.on_event("shutdown")
 async def shutdown():
